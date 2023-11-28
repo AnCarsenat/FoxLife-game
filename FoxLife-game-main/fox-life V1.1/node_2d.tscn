@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://cw0tb6hrom0ao"]
+
+[ext_resource type="Script" path="res://Node2D.gd" id="1_dj88k"]
+[ext_resource type="PackedScene" uid="uid://bsaodwby3a2i5" path="res://charachter/player.tscn" id="2_vsqbr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u3yg8"]
+size = Vector2(176, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5kp8"]
+size = Vector2(176, 20)
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_dj88k")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 500.0
+offset_top = 100.0
+offset_right = 650.0
+offset_bottom = 150.0
+text = "Play"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 500.0
+offset_top = 200.0
+offset_right = 650.0
+offset_bottom = 250.0
+text = "Leave"
+
+[node name="Player" parent="." instance=ExtResource("2_vsqbr")]
+position = Vector2(572, 40)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(571, 111)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(91, -76)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_u3yg8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-81, -70)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_u3yg8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_j5kp8")
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
