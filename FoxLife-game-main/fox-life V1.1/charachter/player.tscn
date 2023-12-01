@@ -1,7 +1,12 @@
-[gd_scene load_steps=42 format=3 uid="uid://bsaodwby3a2i5"]
+[gd_scene load_steps=50 format=3 uid="uid://bsaodwby3a2i5"]
 
 [ext_resource type="Script" path="res://charachter/CharacterBody2D.gd" id="1_7esmr"]
 [ext_resource type="Texture2D" uid="uid://co0qbnq3vnp3m" path="res://charachter/FoxSpriteSheet.png" id="2_8gy34"]
+[ext_resource type="AudioStream" uid="uid://drbn5585pyhn7" path="res://charachter/fell.mp3" id="3_vhiah"]
+[ext_resource type="Texture2D" uid="uid://b5ru4v1lxv4hp" path="res://GUI/health_bar_under.bmp" id="5_i0qg7"]
+[ext_resource type="Texture2D" uid="uid://chmw3n4f22tqn" path="res://GUI/health_bar_progress.bmp" id="6_nslt1"]
+[ext_resource type="Texture2D" uid="uid://b0g2fgm147nff" path="res://GUI/hunger_bar_progress.bmp" id="7_hpixc"]
+[ext_resource type="Texture2D" uid="uid://cp8wiq4sphill" path="res://GUI/thirst_bar_progress.bmp" id="8_aloht"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ttia2"]
 radius = 8.0
@@ -356,6 +361,26 @@ gradient = SubResource("Gradient_6kdbe")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Gradient" id="Gradient_wshnq"]
+offsets = PackedFloat32Array(0, 0.887821, 1)
+colors = PackedColorArray(0.947368, 0.947368, 0.947368, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_blhbx"]
+gradient = SubResource("Gradient_wshnq")
+width = 16
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_77klp"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+gravity = Vector3(0, 98, 0)
+initial_velocity_min = 2.5
+initial_velocity_max = 65.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 5.0
+color = Color(0.854902, 0, 0.113725, 1)
+color_ramp = SubResource("GradientTexture1D_blhbx")
+
 [node name="Player" type="Node2D"]
 position = Vector2(0, -8)
 
@@ -385,4 +410,67 @@ zoom = Vector2(2, 2)
 color = Color(0.482353, 0.482353, 0, 1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_hjfk7")
+offset = Vector2(-29, -28)
 texture_scale = 4.63
+
+[node name="SoundPlayer" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("3_vhiah")
+volume_db = 24.0
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Player"]
+position = Vector2(0, 8)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_77klp")
+one_shot = true
+explosiveness = 1.0
+trail_lifetime = 1.0
+trail_sections = 2
+trail_section_subdivisions = 8
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Health" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.013
+anchor_top = 0.023
+anchor_right = 0.056
+anchor_bottom = 0.042
+offset_left = 0.0240002
+offset_top = 0.0959988
+offset_right = 150.488
+offset_bottom = 37.784
+scale = Vector2(0.25, 0.25)
+value = 100.0
+texture_under = ExtResource("5_i0qg7")
+texture_progress = ExtResource("6_nslt1")
+
+[node name="Hunger" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.013
+anchor_top = 0.023
+anchor_right = 0.056
+anchor_bottom = 0.042
+offset_left = 0.0240002
+offset_top = 15.096
+offset_right = 150.488
+offset_bottom = 52.784
+scale = Vector2(0.25, 0.25)
+value = 100.0
+texture_under = ExtResource("5_i0qg7")
+texture_progress = ExtResource("7_hpixc")
+
+[node name="Thirst" type="TextureProgressBar" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.013
+anchor_top = 0.023
+anchor_right = 0.056
+anchor_bottom = 0.042
+offset_left = 0.0240002
+offset_top = 30.096
+offset_right = 150.488
+offset_bottom = 67.784
+scale = Vector2(0.25, 0.25)
+value = 100.0
+texture_under = ExtResource("5_i0qg7")
+texture_progress = ExtResource("8_aloht")
